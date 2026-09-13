@@ -1,49 +1,27 @@
-// Popup script (runs when popup is opened)
+/** Popup — backend status + dashboard only (no BCT navigation). */
 
-document.addEventListener('DOMContentLoaded', () => {
-  const statusElement = document.getElementById('status');
-  const button = document.getElementById('toggleButton');
-  
-  if (!statusElement || !button) {
-    console.error('Required elements not found');
-    return;
-  }
-  
-  // Load saved state
-  chrome.storage.sync.get(['enabled'], (result) => {
-    const enabled = result.enabled !== false; // Default to true
-    updateUI(enabled);
+document.addEventListener("DOMContentLoaded", () => {
+  const status = document.getElementById("status");
+  const dashBtn = document.getElementById("openDash");
+
+  dashBtn?.addEventListener("click", () => {
+    const url = chrome.runtime.getURL("dashboard/index.html");
+    chrome.tabs.create({ url });
   });
-  
-  // Toggle button click handler
-  button.addEventListener('click', () => {
-    chrome.storage.sync.get(['enabled'], (result) => {
-      const newState = !result.enabled;
-      chrome.storage.sync.set({ enabled: newState }, () => {
-        updateUI(newState);
-        
-        // Send message to content script
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-          if (tabs[0]?.id) {
-            chrome.tabs.sendMessage(tabs[0].id, {
-              type: 'TOGGLE_STATE',
-              enabled: newState
-            });
-          }
-        });
-      });
+
+  fetch("http://localhost:8000/health")
+    .then((r) => {
+      if (status) {
+        status.textContent = r.ok ? "Backend Online" : "Backend Offline";
+        status.style.background = r.ok ? "#d4edda" : "#f8d7da";
+        status.style.color = r.ok ? "#155724" : "#721c24";
+      }
+    })
+    .catch(() => {
+      if (status) {
+        status.textContent = "Backend Offline";
+        status.style.background = "#fff3cd";
+        status.style.color = "#856404";
+      }
     });
-  });
-  
-  function updateUI(enabled: boolean) {
-    statusElement!.textContent = enabled ? 'Enabled' : 'Disabled';
-    statusElement!.className = enabled ? 'status enabled' : 'status disabled';
-    button!.textContent = enabled ? 'Disable' : 'Enable';
-  }
-  
-  // Send message to background script
-  chrome.runtime.sendMessage({ type: 'GREETING' }, (response) => {
-    console.log('Response from background:', response);
-  });
 });
-

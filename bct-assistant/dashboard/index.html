@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BCT — Portail Institutionnel | Legal Assistant</title>
+  <style>
+    :root {
+      --navy: #003366;
+      --navy-mid: #005599;
+      --bg: #eef2f6;
+      --card: #ffffff;
+      --text: #1a2b3c;
+      --muted: #5a7080;
+      --line: #d5e0ea;
+      --ok: #1b7a3d;
+      --warn: #9a6700;
+      --flag: #a11;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background:
+        radial-gradient(ellipse at top left, rgba(0, 85, 153, 0.08), transparent 50%),
+        linear-gradient(180deg, #e8eef5 0%, var(--bg) 40%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      color: #fff;
+      padding: 20px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 650;
+      letter-spacing: 0.01em;
+    }
+    header .sub {
+      margin: 4px 0 0;
+      font-size: 13px;
+      opacity: 0.85;
+    }
+    header .officer {
+      text-align: right;
+      font-size: 12px;
+      opacity: 0.9;
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 20px 48px;
+    }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 720px) {
+      .kpis { grid-template-columns: 1fr; }
+      header { flex-direction: column; align-items: flex-start; }
+      header .officer { text-align: left; }
+    }
+    .kpi {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 18px 20px;
+      box-shadow: 0 2px 8px rgba(0, 40, 80, 0.04);
+    }
+    .kpi .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .kpi .value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.1;
+    }
+    .kpi .hint {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .benefit {
+      background: linear-gradient(135deg, #003366 0%, #004080 100%);
+      color: #fff;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+    }
+    .benefit h2 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+    .benefit p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.5;
+      opacity: 0.95;
+    }
+    .benefit .nums {
+      display: flex;
+      gap: 28px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .benefit .nums div strong {
+      display: block;
+      font-size: 26px;
+      font-weight: 700;
+    }
+    .benefit .nums div span {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+    section.panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 40, 80, 0.04);
+    }
+    section.panel h2 {
+      margin: 0;
+      padding: 14px 18px;
+      font-size: 15px;
+      border-bottom: 1px solid var(--line);
+      background: #f7fafc;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      text-align: left;
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    th {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      background: #fafcfe;
+    }
+    tr:last-child td { border-bottom: none; }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .tag.ok { background: #e6f4ea; color: var(--ok); }
+    .tag.flag { background: #fce8e6; color: var(--flag); }
+    .live {
+      font-size: 11px;
+      color: var(--muted);
+      margin: 10px 0 0;
+    }
+    .live code {
+      background: #e8eef5;
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Portail Institutionnel — BCT Legal Assistant</h1>
+      <p class="sub">Revue en temps réel des questions MSME sur les textes bancaires &amp; change</p>
+    </div>
+    <div class="officer">
+      Agent démo · Direction Générale<br />
+      Session du 12 sept. 2026
+    </div>
+  </header>
+
+  <main>
+    <div class="benefit">
+      <h2>The Agency Benefit</h2>
+      <p>
+        Si la BCT se connecte à cet outil, les agents n’auront plus à répondre manuellement
+        aux questions répétitives sur la Loi 2016-48 / 2016-35. Estimation prudente basée sur
+        ~20 h/semaine de demandes routinières MSME.
+      </p>
+      <div class="nums">
+        <div>
+          <strong>~48 h</strong>
+          <span>économisées / mois</span>
+        </div>
+        <div>
+          <strong>60%</strong>
+          <span>requêtes détournées</span>
+        </div>
+        <div>
+          <strong>0 papier</strong>
+          <span>pour le Q&amp;A de premier niveau</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi">
+        <div class="label">Queries Today</div>
+        <div class="value" id="kpi-queries">47</div>
+        <div class="hint">Inclut sessions extension + API</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Top Unanswered Question</div>
+        <div class="value" style="font-size:15px;font-weight:600;line-height:1.35" id="kpi-unanswered">
+          « Quelles sanctions en cas de non-déclaration de compte devise ? »
+        </div>
+        <div class="hint">À escalader vers un juriste BCT</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Avg. Response Time</div>
+        <div class="value" id="kpi-latency">1.8<span style="font-size:16px">s</span></div>
+        <div class="hint">vs. file d’attente guichet / email</div>
+      </div>
+    </div>
+
+    <section class="panel">
+      <h2>Recent MSME queries — audit trail</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Heure</th>
+            <th>Question</th>
+            <th>Extrait réponse</th>
+            <th>Latence</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody id="query-rows">
+          <tr>
+            <td>14:02</td>
+            <td>What does this law say about foreign exchange?</td>
+            <td>Art. 55–56 Loi 2016-48 : opérations de change selon réglementation BCT…</td>
+            <td>1.6s</td>
+            <td><span class="tag ok">Answered</span></td>
+          </tr>
+          <tr>
+            <td>13:48</td>
+            <td>Comment obtenir un agrément bancaire ?</td>
+            <td>Art. 7–8 : agrément du ministre sur proposition BCT ; dossier via circulaire…</td>
+            <td>2.1s</td>
+            <td><span class="tag ok">Answered</span></td>
+          </tr>
+          <tr>
+            <td>13:31</td>
+            <td>Qui contrôle les normes prudentielles ?</td>
+            <td>Art. 33 &amp; 46 : BCT fixe et contrôle fonds propres, liquidité, risques…</td>
+            <td>1.4s</td>
+            <td><span class="tag ok">Answered</span></td>
+          </tr>
+          <tr>
+            <td>12:55</td>
+            <td>Quelles sanctions en cas de non-déclaration de compte devise ?</td>
+            <td>I cannot find this in the provided document.</td>
+            <td>1.2s</td>
+            <td><span class="tag flag">Flagged</span></td>
+          </tr>
+          <tr>
+            <td>12:10</td>
+            <td>Quel est l’objectif principal de la BCT ?</td>
+            <td>Art. 7 Loi 2016-35 : stabilité des prix ; soutien à la politique économique…</td>
+            <td>1.9s</td>
+            <td><span class="tag ok">Answered</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <p class="live">
+      Live mode: if the FastAPI backend is running, this page refreshes KPIs from
+      <code>http://localhost:8000/stats</code>. Otherwise mock demo data is shown.
+    </p>
+  </main>
+
+  <script>
+    async function refreshFromBackend() {
+      try {
+        const res = await fetch("http://localhost:8000/stats");
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data.queries_today > 0) {
+          document.getElementById("kpi-queries").textContent = data.queries_today;
+        }
+        if (data.avg_response_ms) {
+          document.getElementById("kpi-latency").innerHTML =
+            (data.avg_response_ms / 1000).toFixed(1) + '<span style="font-size:16px">s</span>';
+        }
+        if (data.top_unanswered && data.top_unanswered !== "—") {
+          document.getElementById("kpi-unanswered").textContent = "« " + data.top_unanswered + " »";
+        }
+        if (Array.isArray(data.recent) && data.recent.length) {
+          const tbody = document.getElementById("query-rows");
+          tbody.innerHTML = data.recent.slice(0, 12).map((row) => {
+            const tag = row.flagged
+              ? '<span class="tag flag">Flagged</span>'
+              : '<span class="tag ok">Answered</span>';
+            const ms = row.ms ? (row.ms / 1000).toFixed(1) + "s" : "—";
+            return "<tr><td>live</td><td>" + escapeHtml(row.question) +
+              "</td><td>" + escapeHtml(row.answer_preview || "") +
+              "</td><td>" + ms + "</td><td>" + tag + "</td></tr>";
+          }).join("");
+        }
+      } catch (_) {
+        /* mock data remains — fine for offline demo */
+      }
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    refreshFromBackend();
+    setInterval(refreshFromBackend, 8000);
+  </script>
+</body>
+</html>

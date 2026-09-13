@@ -1,27 +1,43 @@
 {
   "manifest_version": 3,
-  "name": "Bct Assistant",
-  "version": "1.0.0",
-  "description": "A template for Chrome extensions built with TypeScript",
-  "permissions": [
-    "storage",
-    "activeTab"
+  "name": "BCT Legal Assistant",
+  "version": "1.1.0",
+  "description": "AI legal assistant that extracts BCT PDF laws on-the-fly and answers MSME compliance questions with citations.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": [
+    "https://www.bct.gov.tn/*",
+    "https://www.bct.gov.tn/bct/siteprod/documents/*",
+    "http://localhost:8000/*"
   ],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_title": "BCT Legal Assistant"
   },
   "content_scripts": [
     {
       "matches": [
-        "<all_urls>"
+        "https://www.bct.gov.tn/*",
+        "https://www.bct.gov.tn/bct/siteprod/documents/*.pdf"
       ],
-      "js": [
-        "content.js"
-      ]
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
     }
   ],
-  "options_page": "options.html"
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "pdf.worker.min.mjs",
+        "pdf.min.mjs",
+        "dashboard/*"
+      ],
+      "matches": ["https://www.bct.gov.tn/*"]
+    }
+  ]
 }
